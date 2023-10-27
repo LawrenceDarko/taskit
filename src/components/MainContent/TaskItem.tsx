@@ -1,7 +1,9 @@
+import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRadioButtonUnchecked } from 'react-icons/md';
 import { SlCalender } from 'react-icons/sl';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { MdOutlineTaskAlt } from 'react-icons/md';
+import { BsClipboardCheck } from 'react-icons/bs';
 import { useGeneralContext } from '../../context/GeneralContext';
 
 interface TaskItemProps {
@@ -21,7 +23,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
     const copyToClipboard = () => {
         const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
         navigator.clipboard.writeText(taskDetails).then(() => {
-            alert('Task details copied to clipboard!');
+            toast.success('Task details copied to clipboard!');
         }).catch((error) => {
             console.error('Unable to copy to clipboard: ', error);
         });
@@ -29,7 +31,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
     
 
     return (
-        <div onClick={copyToClipboard} className={`relative p-5 cursor-pointer flex bg-[#22262F] rounded items-center gap-4`}>
+        <div className={`relative p-5 cursor-pointer flex bg-[#22262F] rounded items-center gap-4`}>
             <div onClick={() => onUpdateStatus(taskId)}>
                 {!onCompleteTask ? <MdOutlineRadioButtonUnchecked className='text-xl text-[#475569]' /> :
                 <MdOutlineTaskAlt className='text-xl text-[#475569]' />}
@@ -42,9 +44,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
                         <SlCalender />
                         <p>{date}</p>
                     </div>
+                    <BsClipboardCheck onClick={copyToClipboard} className='text-green-500'/>
                 </div>
             </div>
             <RiDeleteBin5Line onClick={() => onDelete(taskId)} className='absolute text-red-500 right-4' />
+            <Toaster />
         </div>
     );
 }
