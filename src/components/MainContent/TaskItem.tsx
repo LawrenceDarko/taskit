@@ -18,8 +18,18 @@ interface TaskItemProps {
 const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDelete, onUpdateStatus, status, onCompleteTask }) => {
     const { setOpenTaskDetails } = useGeneralContext();
 
+    const copyToClipboard = () => {
+        const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
+        navigator.clipboard.writeText(taskDetails).then(() => {
+            alert('Task details copied to clipboard!');
+        }).catch((error) => {
+            console.error('Unable to copy to clipboard: ', error);
+        });
+    };
+    
+
     return (
-        <div className={`relative p-5 cursor-pointer flex bg-[#22262F] rounded items-center gap-4`}>
+        <div onClick={copyToClipboard} className={`relative p-5 cursor-pointer flex bg-[#22262F] rounded items-center gap-4`}>
             <div onClick={() => onUpdateStatus(taskId)}>
                 {!onCompleteTask ? <MdOutlineRadioButtonUnchecked className='text-xl text-[#475569]' /> :
                 <MdOutlineTaskAlt className='text-xl text-[#475569]' />}
