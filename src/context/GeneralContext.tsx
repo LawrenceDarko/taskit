@@ -6,6 +6,8 @@ interface GeneralContextType {
     setOpenTaskDetails: any
     activeCategory: any;
     setActiveCategory: any;
+    taskDetails: string
+    setTaskDetails: () => void;
 }
 
 export const GeneralContext = createContext<GeneralContextType | undefined>(undefined);
@@ -17,6 +19,7 @@ interface GeneralContextProviderProps {
 export const GeneralContextProvider: React.FC<GeneralContextProviderProps> = ({ children }) => {
     const [openTaskDetails, setOpenTaskDetails] = useState(false) as any
     const [activeCategory, setActiveCategory] = useState(null)
+    const [taskDetails, setTaskDetails] = useState('') as any
 
 
     
@@ -26,7 +29,9 @@ export const GeneralContextProvider: React.FC<GeneralContextProviderProps> = ({ 
             openTaskDetails, 
             setOpenTaskDetails,
             activeCategory, 
-            setActiveCategory
+            setActiveCategory,
+            taskDetails, 
+            setTaskDetails
         }}>
         {children}
         </GeneralContext.Provider>
