@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Logo from "./logo";
 import { SidebarRoutes } from "./sidebar-routes";
+import { useGeneralContext } from "../context/GeneralContext";
 
 const Sidebar: React.FC = () => {
+    const { addCategory } = useGeneralContext()
     const [showCategoryInput, setShowCategoryInput] = useState(false);
     const [newCategory, setNewCategory] = useState("");
     const [categories, setCategories] = useState<string[]>([]); // Initialize with an empty array
@@ -29,13 +31,9 @@ const Sidebar: React.FC = () => {
     };
 
     const handleSaveCategory = () => {
-        if (newCategory.trim() !== "") {
-            const updatedCategories = [...categories, newCategory];
-            setCategories(updatedCategories);
-
-            localStorage.setItem("sidebarRoutes", JSON.stringify(updatedCategories));
-
-            setNewCategory("");
+        if (newCategory.trim() !== '') {
+            addCategory(newCategory);
+            setNewCategory('');
             setShowCategoryInput(false);
         }
     };
