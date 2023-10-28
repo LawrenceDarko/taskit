@@ -3,7 +3,7 @@ import TaskItem from './TaskItem';
 import { useGeneralContext } from '../../context/GeneralContext';
 
 const MainContent: React.FC = () => {
-    const { activeCategory } = useGeneralContext()
+    const { activeCategory, categories } = useGeneralContext()
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [taskText, setTaskText] = useState('');
     const [taskDate, setTaskDate] = useState('');
@@ -31,14 +31,14 @@ const MainContent: React.FC = () => {
     }, []);
 
     // Fetch categories from localStorage when the component mounts
-    useEffect(() => {
-        const sidebarRoutesJSON = localStorage.getItem('sidebarRoutes');
-        if (sidebarRoutesJSON) {
-        const sidebarRoutes: string[] = JSON.parse(sidebarRoutesJSON);
-        // Here you can do something with the loaded categories, e.g., set them in state.
-        setSidebarTaskCategory(sidebarRoutes)
-        }
-    }, []);
+    // useEffect(() => {
+    //     const sidebarRoutesJSON = localStorage.getItem('sidebarRoutes');
+    //     if (sidebarRoutesJSON) {
+    //     const sidebarRoutes: string[] = JSON.parse(sidebarRoutesJSON);
+    //     // Here you can do something with the loaded categories, e.g., set them in state.
+    //     setSidebarTaskCategory(sidebarRoutes)
+    //     }
+    // }, []);
 
     const toggleAddTask = () => {
         setIsAddingTask(!isAddingTask);
@@ -79,7 +79,6 @@ const MainContent: React.FC = () => {
         setTasks(existingTasks); // Update the tasks state with the new task
         } else {
         // Handle validation or show an error message if any of the fields is empty
-        // You can add your validation logic or error handling here
         }
     };
     
@@ -102,27 +101,50 @@ const MainContent: React.FC = () => {
         setTasks(updatedTasks);
     };
 
-    const updateTaskStatusToProgress = (taskId: string) => {
-        const updatedTasks = tasks.map((task) => {
-        if (task.id === taskId) {
-            return { ...task, status: 'progress' };
-        }
-        return task;
-    });
+//     const updateTaskStatusToProgress = (taskId: string) => {
+//         const updatedTasks = tasks.map((task) => {
+//         if (task.id === taskId) {
+//             return { ...task, status: 'progress' };
+//         }
+//         return task;
+//     });
 
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-    setTasks(updatedTasks);
-};
+//     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+//     setTasks(updatedTasks);
+// };
+
+    const updateTaskStatusToProgress = (taskId: string) => {
+        console.log(taskId)
+        const updatedTasks = tasks.map((task) => {
+            if (task.id === taskId) {
+                console.log('Updating task:', task);
+                return { ...task, status: 'progress' };
+            }
+            return task;
+        });
+
+        console.log('Updated tasks:', updatedTasks);
+
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        setTasks(updatedTasks);
+    };
+
     
-    const categories = Array.isArray(sidebarTaskCategory) ? sidebarTaskCategory.filter((category: string) => category !== 'All Tasks') : [];
+    // const categories = Array.isArray(sidebarTaskCategory) ? sidebarTaskCategory.filter((category: string) => category !== 'All Tasks') : [];
 
     const completeTasks = tasks.filter((task) => task.status === 'complete');
     
-    const progressingTasks = activeCategory === 'All Tasks' ? 
-        tasks.filter((task) => task.status === 'progress')
-        : activeCategory
-            ? tasks.filter((task) => task.status === 'progress' && task.category === activeCategory)
-            : tasks.filter((task) => task.status === 'progress');
+    // const progressingTasks = activeCategory === 'All Tasks' ? 
+    //     tasks.filter((task) => task.status === 'progress')
+    //     : activeCategory
+    //         ? tasks.filter((task) => task.status === 'progress' && task.category === activeCategory)
+    //         : tasks.filter((task) => task.status === 'progress');
+    
+    const progressingTasks = activeCategory === 'All Tasks'
+    ? tasks.filter((task) => task.status === 'progress')
+    : tasks.filter((task) => task.status === 'progress' && task.category === activeCategory);
+
+    console.log('Complete Task ',completeTasks)
 
     return (
         <div className='relative w-full h-full overflow-y-auto'>
@@ -142,7 +164,7 @@ const MainContent: React.FC = () => {
             </div>
 
             <div className='flex flex-col w-full h-auto gap-2 p-4 pb-20'>
-                {completeTasks && <p className='text-lg text-white'>Completed</p>}
+                <p className='text-lg text-white'>Completed</p>
                 {completeTasks?.map((task, index) => (
                 <TaskItem
                     key={task.id}
@@ -179,7 +201,7 @@ const MainContent: React.FC = () => {
                     className='text-white bg-transparent outline-none'
                     onChange={handleTaskCategoryChange}
                 >
-                    <option value=''>Select Category</option>
+                    <option>Select Category</option>
                     {categories?.map((category: any)=>
                         <option value={category} className='text-black'>{category}</option>
                     )}
