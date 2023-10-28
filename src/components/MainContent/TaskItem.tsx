@@ -20,6 +20,8 @@ interface TaskItemProps {
 const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDelete, onUpdateStatus, status, onCompleteTask }) => {
     const { setOpenTaskDetails, setTaskDetails } = useGeneralContext();
 
+    console.log(name, taskId, status)
+
     const copyToClipboard = () => {
         const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
         navigator.clipboard.writeText(taskDetails).then(() => {
@@ -29,22 +31,21 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
         });
     };
 
-    const getTaskDetails = () => { 
-        // const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
+    const getTaskDetails = () => {
         const taskDetails = {
             name, 
             date, 
             category, 
             status
         }
-        console.log(taskDetails)
+        // console.log(taskDetails)
         setTaskDetails(taskDetails)
     }
     
 
     return (
         <div className={`relative p-5 cursor-pointer flex bg-[#22262F] rounded items-center gap-4`}>
-            <div onClick={() => onUpdateStatus(taskId)}>
+            <div onClick={() => {onUpdateStatus(taskId)}}>
                 {!onCompleteTask ? <MdOutlineRadioButtonUnchecked className='text-xl text-[#475569]' /> :
                 <MdOutlineTaskAlt className='text-xl text-[#475569]' />}
             </div>
