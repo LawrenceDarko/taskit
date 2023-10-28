@@ -6,21 +6,10 @@ import { SidebarRoutes } from "./sidebar-routes";
 import { useGeneralContext } from "../context/GeneralContext";
 
 const Sidebar: React.FC = () => {
-    const { addCategory } = useGeneralContext()
+    const { addCategory, categories } = useGeneralContext()
     const [showCategoryInput, setShowCategoryInput] = useState(false);
     const [newCategory, setNewCategory] = useState("");
-    const [categories, setCategories] = useState<string[]>([]); // Initialize with an empty array
 
-    useEffect(() => {
-        const storedCategories = JSON.parse(localStorage.getItem("sidebarRoutes") || "[]");
-        if (storedCategories.length === 0) {
-            // If no categories are stored, set "All Tasks" as the default
-            setCategories(["All Tasks"]);
-            localStorage.setItem("sidebarRoutes", JSON.stringify(["All Tasks"]));
-        } else {
-            setCategories(storedCategories);
-        }
-    }, []);
 
     const handleAddCategory = () => {
         setShowCategoryInput(true);
