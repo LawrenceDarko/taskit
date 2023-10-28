@@ -103,38 +103,11 @@ const MainContent: React.FC = () => {
     const updateTaskStatus = (taskId: string) => {
         const updatedTasks = tasks.map((task) => {
         if (task.id === taskId) {
-            return { ...task, status: 'complete' };
+            // return { ...task, status: 'complete' };
+            return { ...task, status: task.status === 'progress' ? 'complete' : 'progress' };
         }
         return task;
     });
-
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-        setTasks(updatedTasks);
-    };
-
-//     const updateTaskStatusToProgress = (taskId: string) => {
-//         const updatedTasks = tasks.map((task) => {
-//         if (task.id === taskId) {
-//             return { ...task, status: 'progress' };
-//         }
-//         return task;
-//     });
-
-//     localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-//     setTasks(updatedTasks);
-// };
-
-    const updateTaskStatusToProgress = (taskId: string) => {
-        console.log(taskId)
-        const updatedTasks = tasks.map((task) => {
-            if (task.id === taskId) {
-                console.log('Updating task:', task);
-                return { ...task, status: 'progress' };
-            }
-            return task;
-        });
-
-        // console.log('Updated tasks:', updatedTasks);
 
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
         setTasks(updatedTasks);
@@ -191,7 +164,7 @@ const MainContent: React.FC = () => {
                     category={task.category}
                     status={task.status}
                     onDelete={() => deleteTask(task.id)} // Pass the task's ID to delete
-                    onUpdateStatus={() => updateTaskStatusToProgress(task.id)} // Pass the task's ID to update status
+                    onUpdateStatus={() => updateTaskStatus(task.id)} // Pass the task's ID to update status
                     onCompleteTask={true}
                 />
                 ))}
