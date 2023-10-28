@@ -6,8 +6,8 @@ interface GeneralContextType {
     setOpenTaskDetails: any
     activeCategory: any;
     setActiveCategory: any;
-    taskDetails: string
-    setTaskDetails: () => void;
+    taskDetails: any
+    setTaskDetails: any;
 }
 
 export const GeneralContext = createContext<GeneralContextType | undefined>(undefined);
