@@ -9,8 +9,10 @@ const MainContent: React.FC = () => {
     const [taskDate, setTaskDate] = useState('');
     const [taskCategory, setTaskCategory] = useState('');
     const [taskStatus, setTaskStatus] = useState('progress');
-    const [sidebarTaskCategory, setSidebarTaskCategory] = useState('') as any;
     const [tasks, setTasks] = useState<Task[]>([]);
+
+    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+    const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks); // State for filtered tasks
 
     // Define the Task type
     interface Task {
@@ -21,6 +23,19 @@ const MainContent: React.FC = () => {
         status: string;
     }
 
+    // Update filteredTasks whenever tasks or searchQuery changes
+    useEffect(() => {
+        const filtered = tasks.filter((task) => {
+            // Match the task with the search query in name, status, or date
+            return (
+                task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.date.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        });
+        setFilteredTasks(filtered);
+    }, [tasks, searchQuery]);
+
     // Fetch tasks from localStorage when the component mounts
     useEffect(() => {
         const existingTasksJSON = localStorage.getItem('tasks');
@@ -29,6 +44,11 @@ const MainContent: React.FC = () => {
         setTasks(existingTasks);
         }
     }, []);
+
+    // Handle search input change
+    const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
 
 
     const toggleAddTask = () => {
@@ -114,7 +134,7 @@ const MainContent: React.FC = () => {
             return task;
         });
 
-        console.log('Updated tasks:', updatedTasks);
+        // console.log('Updated tasks:', updatedTasks);
 
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
         setTasks(updatedTasks);
@@ -126,17 +146,24 @@ const MainContent: React.FC = () => {
     
     
     const progressingTasks = activeCategory === 'All Tasks'
-    ? tasks.filter((task) => task.status === 'progress')
-    : tasks.filter((task) => task.status === 'progress' && task.category === activeCategory);
+        ? filteredTasks.filter((task) => task.status === 'progress')
+        : filteredTasks.filter((task) => task.status === 'progress' && task.category === activeCategory);
 
     const completeTasks = activeCategory === 'All Tasks'
-    ? tasks.filter((task) => task.status === 'complete')
-    : tasks.filter((task) => task.status === 'complete' && task.category === activeCategory);
+        ? filteredTasks.filter((task) => task.status === 'complete')
+        : filteredTasks.filter((task) => task.status === 'complete' && task.category === activeCategory);
 
     console.log('Complete Task ',completeTasks)
 
     return (
         <div className='relative w-full h-full overflow-y-auto'>
+            <input
+                type='text'
+                placeholder='Search tasks'
+                className='outline-none border border-[#22262F] bg-transparent ml-5 rounded p-2 w-full md:w-[30%] text-white mt-3'
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+            />
             <div className='flex flex-col w-full h-auto gap-2 p-4'>
                 {progressingTasks?.map((task, index) => (
                 <TaskItem
