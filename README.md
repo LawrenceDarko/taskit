@@ -1,46 +1,63 @@
-# Getting Started with Create React App
+# Task It
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to TaskIt, a web application that helps you manage your tasks and categories. This README will guide you through the installation process and provide an overview of the app's features.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Follow these steps to get the project up and running on your local machine:
 
-### `npm start`
+1. Clone the repository:
+git clone https://github.com/LawrenceDarko/task-it.git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Change to the project directory:
+cd task-it
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+3. Install the project dependencies using npm or yarn:
 
-### `npm test`
+npm install
+or
+yarn install
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+4. Start the development server:
+npm start
+or
+yarn start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the application.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+### Categories
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- On the left sidebar, you can add new categories by clicking on the "+ Add category" button. These categories are saved to the local storage.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- When the app is loaded for the first time, it checks if there are no categories, and if true, it creates a default category item called 'All Tasks.'
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Tasks
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- In the content area, you can add new tasks by clicking on the "+ Add Task" button located at the bottom of the content area. This action transforms the button into an input box where you can input task details.
 
-## Learn More
+- The input box has placeholders for task name, date, and a dropdown to select a category. You must provide values for name, category, and date to add a task.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Tasks can be marked as complete by clicking on the ring icon next to them. Completed tasks are moved to the complete list, and clicking the ring icon again moves them back to the main list.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Clicking on the name or date of a task opens a side modal displaying task details, which can be closed.
+
+- Clicking on the green icon next to the date copies the task details to the clipboard.
+
+### Search
+
+- The app features a search function in the main content area. You can search for tasks by name, status, or date by typing in the search input field.
+
+Feel free to explore and use these features to manage your tasks efficiently.
+
+## Contributors
+
+- [Lawrence Darko](https://github.com/LawrenceDarko)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
