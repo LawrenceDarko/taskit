@@ -143,6 +143,7 @@ const MainContent: React.FC = () => {
     
 
     // const completeTasks = tasks.filter((task) => task.status === 'complete');
+    const newCategoryList = categories.filter((category) => category !== 'All Tasks')
     
     
     const progressingTasks = activeCategory === 'All Tasks'
@@ -218,7 +219,7 @@ const MainContent: React.FC = () => {
                     onChange={handleTaskCategoryChange}
                 >
                     <option>Select Category</option>
-                    {categories?.map((category: any)=>
+                    {newCategoryList?.map((category: any)=>
                         <option value={category} className='text-black'>{category}</option>
                     )}
                 </select>
