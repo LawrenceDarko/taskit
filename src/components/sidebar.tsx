@@ -6,7 +6,7 @@ import { SidebarRoutes } from "./sidebar-routes";
 import { useGeneralContext } from "../context/GeneralContext";
 
 const Sidebar: React.FC = () => {
-    const { addCategory, categories } = useGeneralContext()
+    const { addCategory } = useGeneralContext()
     const [showCategoryInput, setShowCategoryInput] = useState(false);
     const [newCategory, setNewCategory] = useState("");
 
