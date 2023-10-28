@@ -8,6 +8,8 @@ interface GeneralContextType {
     setActiveCategory: any;
     taskDetails: any
     setTaskDetails: any;
+    categories: string[];
+    addCategory: (category: string) => void;
 }
 
 export const GeneralContext = createContext<GeneralContextType | undefined>(undefined);
@@ -18,8 +20,15 @@ interface GeneralContextProviderProps {
 
 export const GeneralContextProvider: React.FC<GeneralContextProviderProps> = ({ children }) => {
     const [openTaskDetails, setOpenTaskDetails] = useState(false) as any
-    const [activeCategory, setActiveCategory] = useState(null)
+    const [activeCategory, setActiveCategory] = useState('All Tasks')
     const [taskDetails, setTaskDetails] = useState('') as any
+    const [categories, setCategories] = useState<string[]>([]);
+
+
+    const addCategory = (category: string) => {
+        setCategories([...categories, category]);
+        localStorage.setItem('sidebarRoutes', JSON.stringify([...categories, category]));
+    };
 
 
     
@@ -31,7 +40,9 @@ export const GeneralContextProvider: React.FC<GeneralContextProviderProps> = ({ 
             activeCategory, 
             setActiveCategory,
             taskDetails, 
-            setTaskDetails
+            setTaskDetails,
+            categories, 
+            addCategory
         }}>
         {children}
         </GeneralContext.Provider>
