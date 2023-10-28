@@ -11,8 +11,12 @@ export const SidebarRoutes = () => {
     const routes = storedRoutes ? JSON.parse(storedRoutes) : [];
 
     const handleItemClick = (label: string) => {
-        setActiveItem(label === activeItem ? null : label);
-        setActiveCategory(label === activeItem ? null : label);
+        if (label === activeItem) {
+            // If the clicked category is already active, do nothing.
+            return;
+        }
+        setActiveItem(label);
+        setActiveCategory(label);
     };
 
 
@@ -21,7 +25,7 @@ export const SidebarRoutes = () => {
             {routes.map((route: string, index: number) => (
                 <SidebarItem
                     key={index}
-                    label={route || 'All Tasts'} // Provide a default label if missing
+                    label={route} // Provide a default label if missing
                     isActive={route === activeItem}
                     onClick={() => handleItemClick(route)}
                 />
