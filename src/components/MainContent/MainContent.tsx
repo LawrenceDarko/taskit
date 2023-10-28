@@ -38,7 +38,7 @@ const MainContent: React.FC = () => {
         // Here you can do something with the loaded categories, e.g., set them in state.
         setSidebarTaskCategory(sidebarRoutes)
         }
-    }, [sidebarTaskCategory]);
+    }, []);
 
     const toggleAddTask = () => {
         setIsAddingTask(!isAddingTask);
