@@ -30,15 +30,6 @@ const MainContent: React.FC = () => {
         }
     }, []);
 
-    // Fetch categories from localStorage when the component mounts
-    // useEffect(() => {
-    //     const sidebarRoutesJSON = localStorage.getItem('sidebarRoutes');
-    //     if (sidebarRoutesJSON) {
-    //     const sidebarRoutes: string[] = JSON.parse(sidebarRoutesJSON);
-    //     // Here you can do something with the loaded categories, e.g., set them in state.
-    //     setSidebarTaskCategory(sidebarRoutes)
-    //     }
-    // }, []);
 
     const toggleAddTask = () => {
         setIsAddingTask(!isAddingTask);
@@ -130,19 +121,17 @@ const MainContent: React.FC = () => {
     };
 
     
-    // const categories = Array.isArray(sidebarTaskCategory) ? sidebarTaskCategory.filter((category: string) => category !== 'All Tasks') : [];
 
-    const completeTasks = tasks.filter((task) => task.status === 'complete');
+    // const completeTasks = tasks.filter((task) => task.status === 'complete');
     
-    // const progressingTasks = activeCategory === 'All Tasks' ? 
-    //     tasks.filter((task) => task.status === 'progress')
-    //     : activeCategory
-    //         ? tasks.filter((task) => task.status === 'progress' && task.category === activeCategory)
-    //         : tasks.filter((task) => task.status === 'progress');
     
     const progressingTasks = activeCategory === 'All Tasks'
     ? tasks.filter((task) => task.status === 'progress')
     : tasks.filter((task) => task.status === 'progress' && task.category === activeCategory);
+
+    const completeTasks = activeCategory === 'All Tasks'
+    ? tasks.filter((task) => task.status === 'complete')
+    : tasks.filter((task) => task.status === 'complete' && task.category === activeCategory);
 
     console.log('Complete Task ',completeTasks)
 
