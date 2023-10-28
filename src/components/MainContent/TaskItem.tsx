@@ -18,7 +18,7 @@ interface TaskItemProps {
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDelete, onUpdateStatus, status, onCompleteTask }) => {
-    const { setOpenTaskDetails } = useGeneralContext();
+    const { setOpenTaskDetails, setTaskDetails } = useGeneralContext();
 
     const copyToClipboard = () => {
         const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
@@ -28,6 +28,18 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
             console.error('Unable to copy to clipboard: ', error);
         });
     };
+
+    const getTaskDetails = () => { 
+        // const taskDetails = `Name: ${name}\nDate: ${date}\nCategory: ${category}\nStatus: ${status}`;
+        const taskDetails = {
+            name, 
+            date, 
+            category, 
+            status
+        }
+        console.log(taskDetails)
+        setTaskDetails(taskDetails)
+    }
     
 
     return (
@@ -36,7 +48,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ taskId, name, date, category, onDel
                 {!onCompleteTask ? <MdOutlineRadioButtonUnchecked className='text-xl text-[#475569]' /> :
                 <MdOutlineTaskAlt className='text-xl text-[#475569]' />}
             </div>
-            <div onClick={() => setOpenTaskDetails(true)} className='flex flex-col'>
+            <div 
+                onClick={() => {
+                    setOpenTaskDetails(true)
+                    getTaskDetails()
+                }} 
+                className='flex flex-col'>
                 <p className={`text-[#475569] ${onCompleteTask && 'line-through'}`}>{name}</p>
                 <div className={`flex items-center gap-2 font-normal ${onCompleteTask && 'line-through line decoration-slate-100'}`}>
                     <p className='text-[#B4B4B4]'>{category}</p>
